@@ -1,6 +1,6 @@
 <ul class="sidebar-nav list-group">
-  <li class="list-group-item"><a href="">Home</a></li>
+  <li class="list-group-item"><a href="{% url "games_and_reviews:index" %}">Home</a></li>
   <li class="list-group-item"><a href="{% url "games_and_reviews:games-list" %}">Games</a></li>
-  <li class="list-group-item"><a href="">Reviews</a></li>
-  <li class="list-group-item"><a href="">Authors</a></li>
+  <li class="list-group-item"><a href="{% url "games_and_reviews:reviews-list" %}">Reviews</a></li>
+  <li class="list-group-item"><a href="{% url "games_and_reviews:authors-list" %}">Authors</a></li>
 </ul>

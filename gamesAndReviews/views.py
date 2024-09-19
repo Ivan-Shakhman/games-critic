@@ -36,3 +36,13 @@ class GameListView(ListView):
         if name:
             query_set = query_set.filter(name__icontains=name)
         return query_set
+
+
+class AuthorListView(ListView):
+    model = Author
+    paginate_by = 8
+
+
+class ReviewListView(ListView):
+    model = Review
+    paginate_by = 8
