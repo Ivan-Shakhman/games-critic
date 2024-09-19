@@ -46,3 +46,11 @@ class AuthorListView(ListView):
 class ReviewListView(ListView):
     model = Review
     paginate_by = 8
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        reviews = context['object_list']
+        for review in reviews:
+            review.short_content = review.short_content()  # Добавляем сокращенный контент в экземпляр
+        context['short_content'] = reviews
+        return context

@@ -1,4 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-  pass
+
+  <h2 class="pb-4 mb-4 font-italic border-bottom">
+    Reviews list
+  </h2>
+  {% for review in review_list %}
+    <div class="blog-post">
+      <h4 class="blog-post-title">{{ review.title }}</h4>
+      <p class="blog-post-meta">{{ review.date_of_post }} <a href="#">{{ review.author.username }}</a></p>
+      <p>reviewed game: <a href="">{{ review.game_to_review.name }}</a></p>
+      <p>{{ review.short_content }}<a class="changelink" href="">Read more -></a></p>
+      <hr>
+    </div>
+  {% endfor %}
+
 {% endblock %}

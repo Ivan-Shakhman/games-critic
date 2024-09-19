@@ -61,6 +61,9 @@ class Review(models.Model):
         related_name="reviews"
     )
 
+    def short_content(self):
+        return self.content[:60] + "..." if len(self.content) > 60 else self.content
+
     def __str__(self):
         return f"({self.author.pseudonym}) {self.title}"
 
