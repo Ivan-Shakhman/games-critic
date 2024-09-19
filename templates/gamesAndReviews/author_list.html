@@ -1,4 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
-  pass
+  <h2 style="text-align: center">
+    Author list
+  </h2>
+  <br>
+  {% for author in author_list %}
+    <div class="col-lg-12"
+         style="background-color: lightgrey; border-radius: 6px; padding: 15px; display: flex; justify-content: space-between; align-items: flex-start;">
+      <div>
+        <h3>{{ author.username }}
+          {% if author.first_name %}
+            ({{ author.first_name }} {{ author.last_name }})
+          {% endif %}
+        </h3>
+        <p>
+          Games added to review: {{ author.games.count }}
+          <br>
+          Reviews: {{ author.review_set.count }}
+          <br>
+          <a class="text-secondary" href="#">View details »</a>
+        </p>
+      </div>
+      <div style="background-color: #ddd; padding: 5px; border-radius: 4px;">
+        <h6>
+          Avg rating:
+        </h6>
+          <br>
+        <h1 style="text-align: center">{{ author.average_rating|default:"N/A" }}</h1>
+      </div>
+    </div>
+    <hr>
+  {% endfor %}
+
+
+
 {% endblock %}
+
+<div class="col-lg-4">
+  <h2>{{ author.username }} ({{ author.first_name }} {{ author.last_name }})</h2>
+  <p></p>
+  <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+</div>

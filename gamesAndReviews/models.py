@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import SET_NULL
+from django.db.models import SET_NULL, Avg
 from django.urls import reverse
 
 
@@ -25,6 +25,9 @@ class Author(AbstractUser):
 
     def get_absolute_url(self):
         return reverse("taxi:driver-detail", kwargs={"pk": self.pk})
+
+    def average_rating(self):
+        return self.review_set.aggregate(Avg('rating'))['rating__avg']
 
     def __str__(self):
         return f"{self.pseudonym} ({self.first_name} {self.last_name})"
