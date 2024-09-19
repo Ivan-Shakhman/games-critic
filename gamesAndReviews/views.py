@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from gamesAndReviews.models import Author, Game, Review, Genre
 
@@ -23,3 +24,15 @@ def index(request):
     }
 
     return render(request, "gamesAndReviews/index.html", context=context)
+
+
+class GameListView(ListView):
+    model = Game
+    paginate_by = 8
+
+    def get_queryset(self):
+        query_set =Game.objects.all()
+        name = self.request.GET.get("name")
+        if name:
+            query_set = query_set.filter(name__icontains=name)
+        return query_set
