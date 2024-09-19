@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import SET_NULL
+from django.urls import reverse
 
 
 class Genre(models.Model):
@@ -21,6 +22,9 @@ class Author(AbstractUser):
         verbose_name = "author"
         verbose_name_plural = "authors"
         ordering = ["pseudonym"]
+
+    def get_absolute_url(self):
+        return reverse("taxi:driver-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return f"{self.pseudonym} ({self.first_name} {self.last_name})"

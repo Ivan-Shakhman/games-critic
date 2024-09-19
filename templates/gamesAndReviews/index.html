@@ -1,1 +1,16 @@
 {% extends "base.html" %}
+{% block content %}
+    <h1>Game Critic</h1>
+    <p>Welcome to portal for gamers and reviews!</p>
+
+        <li><strong>Authors:</strong> {{ num_authors }}</li>
+        <li><strong>Games:</strong> {{ num_games }}</li>
+        <li><strong>Genres:</strong> {{ num_genres }}</li>
+        <li><strong>Reviews:</strong> {{ num_reviews }}</li>
+
+
+    <p>You have visited this page
+        {{ num_visits }} time{{ num_visits|pluralize }}.
+    </p>
+
+{% endblock %}
