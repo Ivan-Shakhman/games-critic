@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from gamesAndReviews.models import Game, Genre, Author
+from gamesAndReviews.models import Game, Genre, Author, Review
 
 admin.site.register(Genre)
 
@@ -30,4 +30,8 @@ class AuthorAdmin(UserAdmin):
             ),
         )
     )
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_filter = ("author", "date_of_post")
 
