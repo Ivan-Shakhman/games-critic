@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import ManyToManyField, DO_NOTHING, SET_NULL
+from django.db.models import SET_NULL
 
 
 class Genre(models.Model):
