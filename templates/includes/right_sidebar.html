@@ -1,19 +1,11 @@
 <aside class="col-md-4 blog-sidebar">
   <h3>Last reviews</h3>
-
-    <div class="p-4 mb-3 bg-light rounded">
-        <h4 class="font-italic">About</h4>
-        <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-      </div>
-
-    <div class="p-4 mb-3 bg-light rounded">
-        <h4 class="font-italic">About</h4>
-        <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-      </div>
+{% for review in last_reviews %}
   <div class="p-4 mb-3 bg-light rounded">
-        <h4 class="font-italic">About</h4>
-        <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+        <h4 class="font-italic">{{ review.title }}
+          <h6>Wrote by <a style="text-decoration: none; color: dimgrey" href="{% url "games_and_reviews:author-detail" pk=review.author.id %}"> {{ review.author.username }}</a></h6>
+        </h4>
+        <p class="mb-0">{{ review.content }}</p>
       </div>
-
-
+{% endfor %}
     </aside>

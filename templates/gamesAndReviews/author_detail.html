@@ -11,46 +11,37 @@
         Change
       </a>
     {% endif %}
-
   </h1>
-
   <h3>
-    
+
     {% if author.first_name %}
       First name: {{ author.first_name }}
-    <br>
+      <br>
     {% endif %}
-  
     {% if author.last_name %}
       Last name: {{ author.last_name }}
-    <br>
+      <br>
     {% endif %}
-    
     {% if author.email %}
       Email: {{ author.email }}
-    <br>
-    {% endif %}
-      {% if author.pseudonym %}
-      Pseudonym: {{ author.pseudonym }}
-    <br>
-      {% endif %}
-      {% if author.games %}
-        Games added to review: 
-        {% for game in author.games.prefetch_related %}
-          {{ game.name }}
-        {% endfor %}
       <br>
-      {% endif %}
-  {% if author.review_set.select_related %}
-    Reviews:
-    {% for review in author.review_set.select_related %}
-    
-       {{ review.title }}, 
-    {% endfor %}
-  {% endif %}
-      </h3>
-
-
-
-
+    {% endif %}
+    {% if author.pseudonym %}
+      Pseudonym: {{ author.pseudonym }}
+      <br>
+    {% endif %}
+    {% if author.games %}
+      Games added to review:
+      {% for game in author.games.prefetch_related %}
+        {{ game.name }}
+      {% endfor %}
+      <br>
+    {% endif %}
+    {% if author.review_set.select_related %}
+      Reviews:
+      {% for review in author.review_set.select_related %}
+        {{ review.title }},
+      {% endfor %}
+    {% endif %}
+  </h3>
 {% endblock %}
