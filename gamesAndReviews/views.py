@@ -48,6 +48,11 @@ class AuthorListView(ListView):
     paginate_by = 8
 
 
+class AuthorDetailView(DetailView):
+    model = Author
+    queryset = Author.objects.all().prefetch_related("games__authors")
+
+
 class ReviewListView(ListView):
     model = Review
     paginate_by = 8

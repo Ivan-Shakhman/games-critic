@@ -18,7 +18,7 @@
           <br>
           Reviews: {{ author.review_set.count }}
           <br>
-          <a class="text-secondary" href="#">View details »</a>
+          <a class="text-secondary" href="{% url "games_and_reviews:author-detail" pk=author.id %}">View details »</a>
         </p>
       </div>
       <div style="background-color: #ddd; padding: 5px; border-radius: 4px;">
@@ -31,13 +31,6 @@
     </div>
     <hr>
   {% endfor %}
-
-
-
+  
 {% endblock %}
 
-<div class="col-lg-4">
-  <h2>{{ author.username }} ({{ author.first_name }} {{ author.last_name }})</h2>
-  <p></p>
-  <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-</div>
