@@ -1,8 +1,25 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, CreateView
 
+from gamesAndReviews.forms import RegistrationForm
 from gamesAndReviews.models import Author, Game, Review, Genre
 
+
+def register(request):
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("games_and_reviews:index")
+    else:
+        form = RegistrationForm()
+        return render(
+            request,
+            "registration/registration.html",
+            {"form": form}
+        )
 
 def index(request):
     """View function for the home page of the site."""
@@ -40,7 +57,6 @@ class GameListView(ListView):
 
 class GameDetailView(DetailView):
     model = Game
-
 
 
 class AuthorListView(ListView):
