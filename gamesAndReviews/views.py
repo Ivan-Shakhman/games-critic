@@ -1,8 +1,11 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy
+from django.views import generic
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
-from gamesAndReviews.forms import RegistrationForm
+from gamesAndReviews.forms import RegistrationForm, UpdateAuthorForm
 from gamesAndReviews.models import Author, Game, Review, Genre
 
 
@@ -15,11 +18,11 @@ def register(request):
             return redirect("games_and_reviews:index")
     else:
         form = RegistrationForm()
-        return render(
-            request,
-            "registration/registration.html",
-            {"form": form}
-        )
+    return render(
+        request,
+        "registration/registration.html",
+        {"form": form}
+    )
 
 def index(request):
     """View function for the home page of the site."""
@@ -67,6 +70,13 @@ class AuthorListView(ListView):
 class AuthorDetailView(DetailView):
     model = Author
     queryset = Author.objects.all().prefetch_related("games__authors")
+
+
+class AuthorUpdateView(UpdateView):
+    form_class = UpdateAuthorForm
+    success_url = reverse_lazy("games_and_reviews:index")
+    queryset = get_user_model().objects.all()
+
 
 
 class ReviewListView(ListView):

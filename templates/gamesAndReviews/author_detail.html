@@ -7,7 +7,7 @@
         Delete
       </a>
 
-      <a href="" class="btn btn-secondary link-to-page">
+      <a href="{% url "games_and_reviews:author-update" pk=author.id %}" class="btn btn-secondary link-to-page">
         Change
       </a>
     {% endif %}
