@@ -16,7 +16,7 @@ class Genre(models.Model):
 
 
 class Author(AbstractUser):
-    pseudonym = models.CharField(max_length=100)
+    pseudonym = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
         verbose_name = "author"
