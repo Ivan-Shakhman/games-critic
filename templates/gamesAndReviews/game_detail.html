@@ -1,1 +1,12 @@
 {% extends "base.html" %}
+{% block content %}
+  <h1 style="text-align: center">{{ game.name }}</h1>
+  <h5>Genre: {{ game.genre.name }}</h5>
+  <h5>Description</h5>
+  <p>
+  {{ game.description }}
+  </p>
+  <h5>Price: {{ game.price }}</h5>
+  <h5>Authors: {% for author in game.authors.prefetch_related %}{{ author.username }}, {% endfor %}</h5>
+  <h5>Release date: {{ game.release_date }}</h5>
+{% endblock %}
