@@ -59,3 +59,7 @@ class ReviewListView(ListView):
             review.short_content = review.short_content()
         context['short_content'] = reviews
         return context
+
+
+class ReviewDetailView(DetailView):
+    model = Review

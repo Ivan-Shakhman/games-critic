@@ -1,1 +1,12 @@
 {% extends "base.html" %}
+{% block content %}
+  <h3>Review on {{ review.game_to_review.name }} by {{ review.author.username }}</h3>
+  <h5>Wrote at: {{ review.date_of_post }}</h5>
+  <p style="font-size: 18px">
+  {{ review.content }}
+  </p>
+  <br>
+  <h5>Final rate: {{ review.rating }}</h5>
+  
+
+{% endblock %}
