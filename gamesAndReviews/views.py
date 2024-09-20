@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from gamesAndReviews.models import Author, Game, Review, Genre
 
@@ -36,6 +36,11 @@ class GameListView(ListView):
         if name:
             query_set = query_set.filter(name__icontains=name)
         return query_set
+
+
+class GameDetailView(DetailView):
+    model = Game
+
 
 
 class AuthorListView(ListView):
