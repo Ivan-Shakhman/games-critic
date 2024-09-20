@@ -51,6 +51,6 @@ class ReviewListView(ListView):
         context = super().get_context_data(**kwargs)
         reviews = context['object_list']
         for review in reviews:
-            review.short_content = review.short_content()  # Добавляем сокращенный контент в экземпляр
+            review.short_content = review.short_content()
         context['short_content'] = reviews
         return context

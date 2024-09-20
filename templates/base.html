@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
 <head>
-    {% block title %}<title>Game critic</title>{% endblock %}
+    {% block title %}
+       <link rel="icon" type="image/ico" style="border-radius: 5%" href="{% static 'images/gc_ico.ico' %}">
+      <title>Game critic</title>
+    {% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"
@@ -10,7 +13,7 @@
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
           crossorigin="anonymous">
     <!-- Add additional CSS in static file -->
-    {% load static %}
+
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
@@ -19,22 +22,31 @@
 {% block nav %}
   <header>
   {% include "includes/nav.html" %}
- 
   <br><br>
-
-    </div>
 </header>
 {% endblock %}
-
 
 <div class="container"></div>
 
 
 <div class="container-fluid">
+
     <div class="row">
+
         <div class="col-sm-2">
-
-
+<p>
+  Games by genre
+</p>
+<ul class="list-group"> 
+  {% for genre in genres %}
+  
+    <li class="list-group-item" ><a href="" style="color: inherit; text-decoration: none;">{{ genre.name }}</a></li>
+    
+  {% endfor %}
+  <li class="list-group-item" ><a href="" style="color: inherit; text-decoration: none;"> 1</a></li>
+  <li class="list-group-item">Item 2</li>
+  <li class="list-group-item">Item 3</li>
+</ul>
 
         </div>
         <div class="col-sm-10 ">
@@ -58,6 +70,12 @@
         </div>
     </div>
 </div>
+
+<footer class="bg-secondary text-center text-lg-start">
+  <div class="text-center p-3">
+    © 2024 Company, Inc. All rights reserved.
+  </div>
+</footer>
 </body>
 
 </html>
