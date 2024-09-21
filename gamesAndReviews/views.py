@@ -100,6 +100,12 @@ class GameCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("games_and_reviews:games-list")
 
 
+class GameUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = GameCreationForm
+    model = Game
+    success_url = reverse_lazy("games_and_reviews:games-list")
+
+
 class ReviewDetailView(DetailView):
     model = Review
 

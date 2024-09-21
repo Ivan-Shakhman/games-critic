@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
   <h1 style="text-align: center">{{ game.name }}</h1>
+  {% if user in game.authors.all %}
+      <a href="" class="btn btn-danger link-to-page">
+        Delete
+      </a>
+
+      <a href="{% url "games_and_reviews:games-update" pk=game.id %}" class="btn btn-secondary link-to-page">
+        Change
+      </a>
+    {% endif %}
   <h5>Genre: {{ game.genre.name }}</h5>
   <h5>Description</h5>
   <p>
@@ -9,5 +18,9 @@
   <h5>Price: {{ game.price }}</h5>
   <h5>Authors: {% for author in game.authors.prefetch_related %}{{ author.username }}, {% endfor %}</h5>
   <h5>Release date: {{ game.release_date }}</h5>
-  <button type="submit" class="btn btn-secondary"><a href="{% url "games_and_reviews:review-create" pk=game.pk %}">create</a> </button>
+  <button type="submit" class="btn btn-secondary">
+    <a style="text-decoration: none; color: floralwhite" href="{% url "games_and_reviews:review-create" pk=game.pk %}">
+      Review it
+    </a> 
+  </button>
 {% endblock %}
