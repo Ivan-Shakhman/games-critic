@@ -5,7 +5,7 @@
         <h4 class="font-italic">{{ review.title }}
           <h6>Wrote by <a style="text-decoration: none; color: dimgrey" href="{% url "games_and_reviews:author-detail" pk=review.author.id %}"> #{{ review.author.username }}</a></h6>
         </h4>
-        <p class="mb-0">{{ review.content }}
+        <p class="mb-0">{{ review.short_content }}
         <br>
           <a style="text-decoration: none; color: dimgrey" href="{% url "games_and_reviews:review-detail" pk=review.id %}"> Read more >></a> 
         </p>

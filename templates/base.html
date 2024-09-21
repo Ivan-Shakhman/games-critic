@@ -46,7 +46,7 @@
 </h4></li>
   {% for genre in genres %}
 
-    <li class="list-group-item" style="text-align: justify-all" ><a href="" style="color: inherit; text-decoration: none;">{{ genre.name }}</a></li>
+    <li class="list-group-item" style="text-align: justify-all" ><a href="{% url "games_and_reviews:games-list" %}?genre={{ genre.name }}" style="color: inherit; text-decoration: none;">{{ genre.name }}</a></li>
 
   {% endfor %}
 </ul>
@@ -76,7 +76,7 @@
 
 <footer class="bg-secondary text-center text-lg-start">
   <div class="text-center p-3">
-    © 2024 Company, Inc. All rights reserved.
+    © 2024 Created by Shakhman Ivan. All rights reserved.
   </div>
 </footer>
 </body>

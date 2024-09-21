@@ -52,10 +52,10 @@ class GameListView(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        query_set =Game.objects.all()
-        name = self.request.GET.get("name")
-        if name:
-            query_set = query_set.filter(name__icontains=name)
+        query_set =super().get_queryset()
+        genre_name = self.request.GET.get("genre", None)
+        if genre_name:
+            query_set = query_set.filter(genre__name__icontains=genre_name)
         return query_set
 
 
