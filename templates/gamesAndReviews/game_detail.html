@@ -9,4 +9,5 @@
   <h5>Price: {{ game.price }}</h5>
   <h5>Authors: {% for author in game.authors.prefetch_related %}{{ author.username }}, {% endfor %}</h5>
   <h5>Release date: {{ game.release_date }}</h5>
+  <button type="submit" class="btn btn-secondary"><a href="{% url "games_and_reviews:review-create" pk=game.pk %}">create</a> </button>
 {% endblock %}

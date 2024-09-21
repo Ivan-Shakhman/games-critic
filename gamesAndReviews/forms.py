@@ -1,11 +1,11 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import forms, ModelForm
+from django.forms import ModelForm, EmailField, forms
 
-from gamesAndReviews.models import Author
+from gamesAndReviews.models import Author, Game, Review
 
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField()
+    email = EmailField()
 
     class Meta:
         model = Author
@@ -27,4 +27,26 @@ class UpdateAuthorForm(ModelForm):
             "first_name",
             "last_name",
             "pseudonym"
+        ]
+
+
+class GameCreationForm(ModelForm):
+    class Meta:
+        model = Game
+        fields = [
+            "name",
+            "description",
+            "price",
+            "genre",
+            "release_date",
+            "authors"
+        ]
+
+class ReviewCreationForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = [
+            "title",
+            "content",
+            "rating",
         ]

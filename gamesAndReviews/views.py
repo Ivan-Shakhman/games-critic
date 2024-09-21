@@ -1,11 +1,12 @@
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
-from gamesAndReviews.forms import RegistrationForm, UpdateAuthorForm
+from gamesAndReviews.forms import RegistrationForm, UpdateAuthorForm, GameCreationForm, ReviewCreationForm
 from gamesAndReviews.models import Author, Game, Review, Genre
 
 
@@ -67,12 +68,12 @@ class AuthorListView(ListView):
     paginate_by = 8
 
 
-class AuthorDetailView(DetailView):
+class AuthorDetailView(LoginRequiredMixin, DetailView):
     model = Author
     queryset = Author.objects.all().prefetch_related("games__authors")
 
 
-class AuthorUpdateView(UpdateView):
+class AuthorUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UpdateAuthorForm
     success_url = reverse_lazy("games_and_reviews:index")
     queryset = get_user_model().objects.all()
@@ -92,5 +93,28 @@ class ReviewListView(ListView):
         return context
 
 
+
+class GameCreateView(LoginRequiredMixin, CreateView):
+    model = Game
+    form_class = GameCreationForm
+    success_url = reverse_lazy("games_and_reviews:games-list")
+
+
 class ReviewDetailView(DetailView):
     model = Review
+
+
+def create_review(request, pk):
+    game = get_object_or_404(Game, id=pk)
+    if request.method == 'POST':
+        form = ReviewCreationForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.author = request.user
+            review.game_to_review = game
+            review.save()
+            return redirect("games_and_reviews:reviews-list")
+    else:
+        form = ReviewCreationForm()
+
+    return render(request, 'gamesAndReviews/review_form.html', {'form': form, "game": game})
