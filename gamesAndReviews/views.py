@@ -124,6 +124,13 @@ class ReviewListView(ListView):
         )
         return context
 
+    def get_queryset(self):
+        query_set = super().get_queryset()
+        title = self.request.GET.get("title", "")
+        if title:
+            query_set = query_set.filter(title__icontains=title)
+        return query_set
+
 
 
 class GameCreateView(LoginRequiredMixin, CreateView):

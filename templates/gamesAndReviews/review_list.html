@@ -1,4 +1,12 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block search %}
+  <form action="" method="get" class="form-inline" novalidate>
+  {{ review_search_form|crispy }}
+  <input type="submit" value="find" class="btn btn-secondary">
+  </form>
+{% endblock %}
+
 {% block content %}
 
   <h2 class="pb-4 mb-4 font-italic border-bottom">
@@ -6,7 +14,7 @@
   </h2>
   {% for review in review_list %}
     <div class="blog-post">
-      <h4 class="blog-post-title">{{ review.title }}</h4>
+      <h5 class="blog-post-title">{{ review.title }}</h5>
       <p class="blog-post-meta">{{ review.date_of_post }} <a href="{% url "games_and_reviews:author-detail" pk=review.author.id %}" style="text-decoration: none; color: dimgrey">#{{ review.author.username }}</a>
         <br>
       reviewed game: <a href="{% url "games_and_reviews:games-detail" pk=review.game_to_review.id %}" style="text-decoration: none; color: dimgrey">#{{ review.game_to_review.name }}</a>
