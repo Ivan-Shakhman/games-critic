@@ -1,47 +1,66 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>
-    Username: {{ author.username }}
-    {% if author.pk == user.id %}
-      <a href="" class="btn btn-danger link-to-page">
-        Delete
-      </a>
 
-      <a href="{% url "games_and_reviews:author-update" pk=author.id %}" class="btn btn-secondary link-to-page">
-        Change
-      </a>
-    {% endif %}
-  </h1>
-  <h3>
+  <div class="float-right">
+                <a href="" class="btn btn-danger">Delete</a>
+                <a href="{% url 'games_and_reviews:author-update' pk=author.id %}" class="btn btn-secondary">Edit</a>
+              </div>
+  <div class="container mt-6">
+    <div class="row">
+      <div class="col-md-10 offset-md-2">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h1 class="mb-0">Profile of {{ author.username }}</h1>
+            {% if author.pk == user.id %}
 
-    {% if author.first_name %}
-      First name: {{ author.first_name }}
-      <br>
-    {% endif %}
-    {% if author.last_name %}
-      Last name: {{ author.last_name }}
-      <br>
-    {% endif %}
-    {% if author.email %}
-      Email: {{ author.email }}
-      <br>
-    {% endif %}
-    {% if author.pseudonym %}
-      Pseudonym: {{ author.pseudonym }}
-      <br>
-    {% endif %}
-    {% if author.games %}
-      Games added to review:
-      {% for game in author.games.prefetch_related %}
-        {{ game.name }}
-      {% endfor %}
-      <br>
-    {% endif %}
-    {% if author.review_set.select_related %}
-      Reviews:
-      {% for review in author.review_set.select_related %}
-        {{ review.title }},
-      {% endfor %}
-    {% endif %}
-  </h3>
+            {% endif %}
+          </div>
+          <div class="card-body">
+            <h3>Personal Information</h3>
+            <ul class="list-group list-group-flush">
+              {% if author.first_name %}
+                <li class="list-group-item"><strong>First Name:</strong> {{ author.first_name }}</li>
+              {% endif %}
+              {% if author.last_name %}
+                <li class="list-group-item"><strong>Last Name:</strong> {{ author.last_name }}</li>
+              {% endif %}
+              {% if author.email %}
+                <li class="list-group-item"><strong>Email:</strong> {{ author.email }}</li>
+              {% endif %}
+              {% if author.pseudonym %}
+                <li class="list-group-item"><strong>Pseudonym:</strong> {{ author.pseudonym }}</li>
+              {% endif %}
+            </ul>
+
+            <h3 class="mt-4">Games and Reviews</h3>
+            <div>
+              {% if author.games.exists %}
+                <h5>Games added to review:</h5>
+                <ul class="list-group list-group-flush">
+                  {% for game in author.games.all %}
+                    <li class="list-group-item">{{ game.name }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>No games added to reviews.</p>
+              {% endif %}
+            </div>
+
+            <div class="mt-4">
+              {% if author.review_set.exists %}
+                <h5>Reviews:</h5>
+                <ul class="list-group list-group-flush">
+                  {% for review in author.review_set.all %}
+                    <li class="list-group-item">{{ review.title }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>No reviews written yet.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

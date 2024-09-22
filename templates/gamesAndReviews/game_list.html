@@ -15,10 +15,11 @@
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2 text-secondary">{{ game.genre.name }}</strong>
-          <h5 class="mb-0">{{ game.name }}</h5>
+          <h6 class="mb-0">{{ game.name }}</h6>
           <div class="mb-1 text-muted">{{ game.release_date }}</div>
           
           <a href="{% url "games_and_reviews:games-detail" pk=game.id %}" class="stretched-link" style="text-decoration: none; color: dimgrey">Details >></a>
+        <h5>Rating: {{ game.average_rating }}</h5>
         </div>
         <div class="col-auto d-none d-lg-block">
           <img src="{{ game.image.url }}" width="200" height="250" alt="">

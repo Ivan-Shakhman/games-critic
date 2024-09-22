@@ -28,8 +28,10 @@ class Author(AbstractUser):
         return reverse("taxi:driver-detail", kwargs={"pk": self.pk})
 
     def average_rating(self):
-        return self.review_set.aggregate(Avg('rating'))['rating__avg']
-
+        avg_rating = self.review_set.aggregate(Avg('rating'))['rating__avg']
+        if avg_rating:
+            return round(avg_rating, 1)
+        return 0
     def __str__(self):
         return f"{self.username} ({self.first_name} {self.last_name})"
 
@@ -47,6 +49,11 @@ class Game(models.Model):
     )
     authors = models.ManyToManyField(Author, related_name="games")
     release_date = models.DateField()
+
+    def average_rating(self):
+        reviews = self.reviews.all()
+        average = reviews.aggregate(Avg("rating"))["rating__avg"]
+        return round(average, 1) if average else "N/A"
 
     def __str__(self):
         return f"{self.name} genre: {self.genre}"
