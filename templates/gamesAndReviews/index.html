@@ -1,16 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Game Critic</h1>
-    <p>Welcome to portal for gamers and reviews!</p>
+    <div class="container text-center">
+        <h1 class="my-4">Game Critic</h1>
+        <p class="lead">Welcome to the portal for gamers and reviews!</p>
 
-        <li><strong>Authors:</strong> {{ num_authors }}</li>
-        <li><strong>Games:</strong> {{ num_games }}</li>
-        <li><strong>Genres:</strong> {{ num_genres }}</li>
-        <li><strong>Reviews:</strong> {{ num_reviews }}</li>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Authors</h5>
+                        <p class="card-text">{{ num_authors }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Games</h5>
+                        <p class="card-text">{{ num_games }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Genres</h5>
+                        <p class="card-text">{{ num_genres }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Reviews</h5>
+                        <p class="card-text">{{ num_reviews }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+      <h1>User Guidelines</h1>
+    <p>Welcome to our community! To ensure a positive experience for everyone, we ask that all users adhere to the following guidelines:</p>
 
-    <p>You have visited this page
-        {{ num_visits }} time{{ num_visits|pluralize }}.
-    </p>
+    <ol>
+        <li><strong>Be Respectful:</strong> Treat all members with kindness and respect. Discrimination, harassment, or any form of hate speech will not be tolerated.</li>
+        <li><strong>Stay Friendly:</strong> Foster a welcoming environment. Encourage constructive discussions and avoid negative or hostile comments.</li>
+        <li><strong>Be Constructive:</strong> When providing feedback or criticism, focus on being constructive. Aim to help others improve rather than tear them down.</li>
+        <li><strong>Respect Privacy:</strong> Do not share personal information about yourself or others without consent. Respect each user's privacy and boundaries.</li>
+        <li><strong>No Spam:</strong> Avoid posting irrelevant content or excessive self-promotion. Keep discussions on topic to maintain a focused community.</li>
+        <li><strong>Use Appropriate Language:</strong> Maintain a standard of decency in your language. Avoid offensive or vulgar expressions that may upset others.</li>
+        <li><strong>Follow the Law:</strong> Do not post content that infringes on copyright, violates intellectual property rights, or is illegal in any way.</li>
+        <li><strong>Report Issues:</strong> If you encounter behavior that violates these guidelines, report it to the moderators. Help us maintain a safe and friendly environment.</li>
+        <li><strong>Engage Positively:</strong> Participate actively and positively in discussions. Your contributions matter and can greatly enhance the community experience.</li>
+        <li><strong>Be Open-Minded:</strong> Embrace diversity and differing opinions. Healthy debate is encouraged, but do so respectfully.</li>
+    </ol>
 
+    <p>By following these guidelines, we can create a vibrant and supportive community where everyone can thrive. Thank you for being a part of our site!</p>
+      
+        <p class="my-4">
+            You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.
+        </p>
+    </div>
 {% endblock %}
