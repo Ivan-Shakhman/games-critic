@@ -149,17 +149,27 @@ class ReviewDetailView(DetailView):
     model = Review
 
 
-def create_review(request, pk):
-    game = get_object_or_404(Game, id=pk)
-    if request.method == 'POST':
-        form = ReviewCreationForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.author = request.user
-            review.game_to_review = game
-            review.save()
-            return redirect("games_and_reviews:reviews-list")
-    else:
-        form = ReviewCreationForm()
+class CreateReviewView(CreateView):
+    model = Review
+    form_class = ReviewCreationForm
+    template_name = 'gamesAndReviews/review_form.html'
 
-    return render(request, 'gamesAndReviews/review_form.html', {'form': form, "game": game})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['game'] = get_object_or_404(Game, id=self.kwargs['pk'])
+        return context
+
+    def form_valid(self, form):
+        game = get_object_or_404(Game, id=self.kwargs['pk'])
+        form.instance.author = self.request.user
+        form.instance.game_to_review = game
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("games_and_reviews:reviews-list")
+
+
+class ReviewUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = ReviewCreationForm
+    model = Review
+    success_url = reverse_lazy("games_and_reviews:reviews-list")
