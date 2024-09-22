@@ -30,7 +30,7 @@ class Author(AbstractUser):
         return self.review_set.aggregate(Avg('rating'))['rating__avg']
 
     def __str__(self):
-        return f"{self.pseudonym} ({self.first_name} {self.last_name})"
+        return f"{self.username} ({self.first_name} {self.last_name})"
 
 
 class Game(models.Model):

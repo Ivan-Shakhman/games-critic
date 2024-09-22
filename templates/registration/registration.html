@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
 {% block content %}
-<form method="post" action="">
+<form method="post" action="" novalidate>
   {{ form|crispy }}
   {% csrf_token %}
   <input type="submit" value="Register me">

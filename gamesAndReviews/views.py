@@ -52,7 +52,7 @@ def index(request):
 
 class GameListView(ListView):
     model = Game
-    paginate_by = 8
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -70,7 +70,7 @@ class GameListView(ListView):
             query_set = query_set.filter(genre__name__icontains=genre_name)
         if name:
             query_set = query_set.filter(name__icontains=name)
-        return query_set
+        return query_set.order_by("-release_date")
 
 
 class GameDetailView(DetailView):
@@ -79,7 +79,7 @@ class GameDetailView(DetailView):
 
 class AuthorListView(ListView):
     model = Author
-    paginate_by = 8
+    paginate_by = 6
 
     def get_queryset(self):
         query_set = super().get_queryset()
@@ -110,7 +110,7 @@ class AuthorUpdateView(LoginRequiredMixin, UpdateView):
 
 class ReviewListView(ListView):
     model = Review
-    paginate_by = 8
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -129,7 +129,7 @@ class ReviewListView(ListView):
         title = self.request.GET.get("title", "")
         if title:
             query_set = query_set.filter(title__icontains=title)
-        return query_set
+        return query_set.order_by("-date_of_post")
 
 
 

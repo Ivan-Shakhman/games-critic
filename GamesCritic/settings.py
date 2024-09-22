@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'gamesAndReviews',
     "crispy_bootstrap4",
     "crispy_forms",
+    "cloudinary",
+    "cloudinary_storage"
 ]
 
 MIDDLEWARE = [
@@ -76,6 +78,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GamesCritic.wsgi.application'
 
+#cloudinary settings
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": "de1mietzb",
+    "API_KEY": "957457241399561",
+    "API_SECRET": "Fy4Tm0-Y7X5AkI0L0P0SdkDEIIg",
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
