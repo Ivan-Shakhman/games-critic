@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from gamesAndReviews.forms import RegistrationForm, UpdateAuthorForm, GameCreationForm, ReviewCreationForm, \
     GameSearchForm, AuthorSearchForm, ReviewSearchForm
@@ -107,6 +107,11 @@ class AuthorUpdateView(LoginRequiredMixin, UpdateView):
     queryset = get_user_model().objects.all()
 
 
+class AuthorDeleteView(LoginRequiredMixin, CreateView):
+    model = Author
+    success_url = reverse_lazy("games_and_reviews:index")
+
+
 
 class ReviewListView(ListView):
     model = Review
@@ -145,6 +150,11 @@ class GameUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("games_and_reviews:games-list")
 
 
+class GameDeleteView(LoginRequiredMixin, DeleteView):
+    model = Game
+    success_url = reverse_lazy("games_and_reviews:games-list")
+
+
 class ReviewDetailView(DetailView):
     model = Review
 
@@ -165,11 +175,17 @@ class CreateReviewView(CreateView):
         form.instance.game_to_review = game
         return super().form_valid(form)
 
+
     def get_success_url(self):
         return reverse_lazy("games_and_reviews:reviews-list")
 
 
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ReviewCreationForm
+    model = Review
+    success_url = reverse_lazy("games_and_reviews:reviews-list")
+
+
+class ReviewDeleteView(LoginRequiredMixin, DeleteView):
     model = Review
     success_url = reverse_lazy("games_and_reviews:reviews-list")
