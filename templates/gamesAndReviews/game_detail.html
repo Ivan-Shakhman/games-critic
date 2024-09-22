@@ -8,9 +8,15 @@
 
       <a href="{% url "games_and_reviews:games-update" pk=game.id %}" class="btn btn-secondary link-to-page">
         Change
+      
       </a>
+    <br>
+      <br>
     {% endif %}
+  
+  <img src="{{ game.image.url }}" width="730" height=480" >
   <h5>Genre: {{ game.genre.name }}</h5>
+
   <h5>Description</h5>
   <p>
   {{ game.description }}

@@ -36,6 +36,7 @@ class GameCreationForm(ModelForm):
         model = Game
         fields = [
             "name",
+            "image",
             "description",
             "price",
             "genre",

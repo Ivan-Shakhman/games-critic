@@ -9,10 +9,17 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+import environ
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from decouple import config
 
 from gamesAndReviews.templatetags import query_transform
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,13 +86,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'GamesCritic.wsgi.application'
 
 #cloudinary settings
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "de1mietzb",
-    "API_KEY": "957457241399561",
-    "API_SECRET": "Fy4Tm0-Y7X5AkI0L0P0SdkDEIIg",
-}
+
+
+cloudinary.config(
+    cloud_name="de1mietzb",
+    api_key="689212333997839",
+    api_secret="qqjzzorQljAPDRW8w3oZWBJ0JWw",
+    secure=True,
+)
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -137,6 +148,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = (BASE_DIR / 'static',)
 

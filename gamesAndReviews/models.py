@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -35,6 +36,7 @@ class Author(AbstractUser):
 
 class Game(models.Model):
     name = models.CharField(max_length=255)
+    image = CloudinaryField('image')
     description = models.TextField()
     price = models.DecimalField(max_digits=4, decimal_places=2)
     genre = models.ForeignKey(
