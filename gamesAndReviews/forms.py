@@ -1,5 +1,6 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelForm, EmailField, forms
+from django.forms import ModelForm, EmailField
 
 from gamesAndReviews.models import Author, Game, Review
 
@@ -50,3 +51,27 @@ class ReviewCreationForm(ModelForm):
             "content",
             "rating",
         ]
+
+
+class GameSearchForm(forms.Form):
+    name =forms.CharField(
+        max_length=50,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Search by Name"})
+    )
+
+
+class ReviewSearchForm(forms.Form):
+    title = forms.CharField(
+        max_length=50,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Search by Title"})
+    )
+
+
+class AuthorSearchForm(forms.Form):
+    username = forms.CharField(
+        max_length=50,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Search by username"})
+    )

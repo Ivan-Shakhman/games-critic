@@ -1,4 +1,12 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block search %}
+  <form action="" method="get" class="form-inline" novalidate>
+  {{ game_search_form|crispy }}
+  <input type="submit" value="find" class="btn btn-secondary">
+  </form>
+{% endblock %}
+
 {% block content %}
   {% if game_list %}
     <div class="row mb-2">

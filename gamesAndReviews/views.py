@@ -1,3 +1,5 @@
+from lib2to3.fixes.fix_input import context
+
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,7 +8,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
-from gamesAndReviews.forms import RegistrationForm, UpdateAuthorForm, GameCreationForm, ReviewCreationForm
+from gamesAndReviews.forms import RegistrationForm, UpdateAuthorForm, GameCreationForm, ReviewCreationForm, \
+    GameSearchForm, AuthorSearchForm, ReviewSearchForm
 from gamesAndReviews.models import Author, Game, Review, Genre
 
 
@@ -51,11 +54,22 @@ class GameListView(ListView):
     model = Game
     paginate_by = 8
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["game_search_form"] = GameSearchForm(
+            initial={"name": name}
+        )
+        return context
+
     def get_queryset(self):
         query_set =super().get_queryset()
         genre_name = self.request.GET.get("genre", None)
+        name = self.request.GET.get("name", None)
         if genre_name:
             query_set = query_set.filter(genre__name__icontains=genre_name)
+        if name:
+            query_set = query_set.filter(name__icontains=name)
         return query_set
 
 
@@ -67,6 +81,20 @@ class AuthorListView(ListView):
     model = Author
     paginate_by = 8
 
+    def get_queryset(self):
+        query_set = super().get_queryset()
+        username = self.request.GET.get("username", None)
+        if username:
+            query_set = query_set.filter(username__icontains=username)
+        return query_set
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.request.GET.get("username", "")
+        context["author_search_form"] = AuthorSearchForm(
+            initial={"username": username}
+        )
+        return context
 
 class AuthorDetailView(LoginRequiredMixin, DetailView):
     model = Author
@@ -87,9 +115,13 @@ class ReviewListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         reviews = context['object_list']
+        title = self.request.GET.get("title", "")
         for review in reviews:
             review.short_content = review.short_content()
         context['short_content'] = reviews
+        context["review_search_form"] = ReviewSearchForm(
+            initial={"review_title": title}
+        )
         return context
 
 
