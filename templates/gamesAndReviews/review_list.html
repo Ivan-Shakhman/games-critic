@@ -14,7 +14,7 @@
   </h2>
   {% for review in review_list %}
     <div class="blog-post">
-      <h5 class="blog-post-title">{{ review.title }}</h5>
+      <h4 class="blog-post-title">{{ review.title }}</h4>
       <p class="blog-post-meta">{{ review.date_of_post }} <a href="{% url "games_and_reviews:author-detail" pk=review.author.id %}" style="text-decoration: none; color: dimgrey">#{{ review.author.username }}</a>
         <br>
       reviewed game: <a href="{% url "games_and_reviews:games-detail" pk=review.game_to_review.id %}" style="text-decoration: none; color: dimgrey">#{{ review.game_to_review.name }}</a>
