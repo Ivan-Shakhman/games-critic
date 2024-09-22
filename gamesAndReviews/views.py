@@ -107,7 +107,7 @@ class AuthorUpdateView(LoginRequiredMixin, UpdateView):
     queryset = get_user_model().objects.all()
 
 
-class AuthorDeleteView(LoginRequiredMixin, CreateView):
+class AuthorDeleteView(LoginRequiredMixin, DeleteView):
     model = Author
     success_url = reverse_lazy("games_and_reviews:index")
 

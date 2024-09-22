@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% if user.id == author.id %}
   <div class="float-right">
-    <a href="" class="btn btn-danger">Delete</a>
-    <a href="{% url 'games_and_reviews:author-update' pk=author.id %}" class="btn btn-secondary">Edit</a>
+    <a href="{% url "games_and_reviews:author-delete" pk=author.id %}"
+       class="btn btn-danger">Delete</a>
+    <a href="{% url 'games_and_reviews:author-update' pk=author.id %}" 
+       class="btn btn-secondary">Edit</a>
   </div>
+  {% endif %}
   <div class="container mt-6">
     <div class="row">
       <div class="col-md-10 offset-md-2">

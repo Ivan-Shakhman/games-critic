@@ -2,7 +2,7 @@
 {% block content %}
   <h1 style="text-align: center">{{ game.name }}</h1>
   {% if user in game.authors.all %}
-      <a href="" class="btn btn-danger link-to-page">
+      <a href="{% url "games_and_reviews:games-delete" pk=game.id %}" class="btn btn-danger link-to-page">
         Delete
       </a>
 
@@ -14,7 +14,7 @@
       <br>
     {% endif %}
   
-  <img src="{{ game.image.url }}" width="730" height=480" >
+  <img src="{{ game.image.url }}" width="730" height=480" alt="">
   <h5>Genre: {{ game.genre.name }}</h5>
 
   <h5>Description</h5>

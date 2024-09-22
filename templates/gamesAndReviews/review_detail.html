@@ -5,7 +5,8 @@
        class="btn btn-secondary link-to-page">
         Change
       </a>
-    <a href="" class="btn btn-danger link-to-page">
+    <a href="{% url "games_and_reviews:review-delete" pk=review.id %}" 
+       class="btn btn-danger link-to-page">
         Delete
       </a>
   {% endif %}
