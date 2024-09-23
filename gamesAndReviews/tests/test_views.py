@@ -1,9 +1,8 @@
-from django.contrib.auth.hashers import make_password
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from gamesAndReviews.models import Author, Game, Review, Genre
-from gamesAndReviews.forms import RegistrationForm, GameCreationForm, ReviewCreationForm
+
 
 class AuthorViewTests(TestCase):
     def setUp(self):
