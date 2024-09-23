@@ -44,6 +44,11 @@ class GameCreationForm(ModelForm):
             "authors"
         ]
 
+        widgets = {
+            "release_date": forms.DateInput(attrs={"type": "date"}),
+            "authors": forms.CheckboxSelectMultiple(),
+        }
+
 class ReviewCreationForm(ModelForm):
     class Meta:
         model = Review

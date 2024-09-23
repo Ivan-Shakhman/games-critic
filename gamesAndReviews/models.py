@@ -18,11 +18,17 @@ class Genre(models.Model):
 
 class Author(AbstractUser):
     pseudonym = models.CharField(max_length=100, null=True, blank=True)
+    favorite_games = models.ManyToManyField(
+        "Game",
+        related_name="favorite_by",
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = "author"
         verbose_name_plural = "authors"
-        ordering = ["pseudonym"]
+        ordering = ["username"]
 
     def get_absolute_url(self):
         return reverse("taxi:driver-detail", kwargs={"pk": self.pk})
@@ -33,7 +39,7 @@ class Author(AbstractUser):
             return round(avg_rating, 1)
         return 0
     def __str__(self):
-        return f"{self.username} ({self.first_name} {self.last_name})"
+        return f"{self.username}"
 
 
 class Game(models.Model):

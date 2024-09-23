@@ -159,7 +159,7 @@ class ReviewDetailView(DetailView):
     model = Review
 
 
-class CreateReviewView(CreateView):
+class CreateReviewView(LoginRequiredMixin ,CreateView):
     model = Review
     form_class = ReviewCreationForm
     template_name = 'gamesAndReviews/review_form.html'
