@@ -1,15 +1,17 @@
 from lib2to3.fixes.fix_input import context
 
 from django.contrib.auth import login, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from gamesAndReviews.forms import RegistrationForm, UpdateAuthorForm, GameCreationForm, ReviewCreationForm, \
-    GameSearchForm, AuthorSearchForm, ReviewSearchForm
+    GameSearchForm, AuthorSearchForm, ReviewSearchForm, AddToFavoritesForm
 from gamesAndReviews.models import Author, Game, Review, Genre
 
 
@@ -60,6 +62,7 @@ class GameListView(ListView):
         context["game_search_form"] = GameSearchForm(
             initial={"name": name}
         )
+        context["add_to_favorite_form"] = AddToFavoritesForm()
         return context
 
     def get_queryset(self):
@@ -71,6 +74,13 @@ class GameListView(ListView):
         if name:
             query_set = query_set.filter(name__icontains=name)
         return query_set.order_by("-release_date")
+
+    def post(self, request, *args, **kwargs):
+        form = AddToFavoritesForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+        return redirect("games_and_reviews:games-list")
+
 
 
 class GameDetailView(DetailView):

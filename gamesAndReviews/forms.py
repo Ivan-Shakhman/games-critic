@@ -81,3 +81,19 @@ class AuthorSearchForm(forms.Form):
         label="",
         widget=forms.TextInput(attrs={"placeholder": "Search by username"})
     )
+
+
+class AddToFavoritesForm(forms.Form):
+    game_id = forms.IntegerField(widget=forms.HiddenInput)
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+    def save(self):
+        game = Game.objects.get(id=self.cleaned_data['game_id'])
+        if self.user and game:
+            if game in self.user.favorite_games.all():
+                self.user.favorite_games.remove(game)
+            else:
+                self.user.favorite_games.add(game)
