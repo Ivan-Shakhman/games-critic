@@ -22,7 +22,6 @@ class Author(AbstractUser):
         "Game",
         related_name="favorite_by",
         blank=True,
-        null=True
     )
 
     class Meta:
