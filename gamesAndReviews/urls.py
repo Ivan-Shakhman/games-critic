@@ -20,8 +20,8 @@ urlpatterns = [
     path("authors/<int:pk>/delete/", AuthorDeleteView.as_view(), name="author-delete"),
     path("reviews/", ReviewListView.as_view(), name="reviews-list"),
     path("reviews/create/<int:pk>/", CreateReviewView.as_view(), name="review-create"),
-    path("reviews/<int:pk>/update", ReviewUpdateView.as_view(), name="review-update"),
     path("reviews/<int:pk>/", ReviewDetailView.as_view(), name="review-detail"),
+    path("reviews/<int:pk>/update", ReviewUpdateView.as_view(), name="review-update"),
     path("reviews/<int:pk>/delete", ReviewDeleteView.as_view(), name="review-delete"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
