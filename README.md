@@ -1,1 +1,1 @@
-"# games-critic" 
+# Game Critic django project

@@ -22,6 +22,7 @@ from gamesAndReviews import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('__debug__/', include('debug_toolbar.urls')),
     path("register/", views.register, name="register"),
     path("accounts/", include("django.contrib.auth.urls")),
     path(

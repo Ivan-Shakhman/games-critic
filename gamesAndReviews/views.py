@@ -1,8 +1,4 @@
-from lib2to3.fixes.fix_input import context
-
 from django.contrib.auth import login, get_user_model
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -79,7 +75,12 @@ class GameListView(ListView):
         return context
 
     def get_queryset(self):
-        query_set = super().get_queryset()
+        query_set = (
+            super()
+            .get_queryset()
+            .prefetch_related("authors")
+            .select_related("genre")
+        )
         genre_name = self.request.GET.get("genre", None)
         name = self.request.GET.get("name", None)
         if genre_name:
@@ -97,7 +98,7 @@ class GameListView(ListView):
 
 class GameDetailView(DetailView):
     model = Game
-
+    queryset = Game.objects.prefetch_related("reviews__author", "authors")
 
 class AuthorListView(ListView):
     model = Author
@@ -121,7 +122,10 @@ class AuthorListView(ListView):
 
 class AuthorDetailView(LoginRequiredMixin, DetailView):
     model = Author
-    queryset = Author.objects.all().prefetch_related("games__authors")
+    queryset = Author.objects.all().prefetch_related(
+        "games__authors",
+        "games__genre"
+    )
 
 
 class AuthorUpdateView(LoginRequiredMixin, UpdateView):
@@ -152,7 +156,7 @@ class ReviewListView(ListView):
         return context
 
     def get_queryset(self):
-        query_set = super().get_queryset()
+        query_set = super().get_queryset().select_related("author", "game_to_review__genre")
         title = self.request.GET.get("title", "")
         if title:
             query_set = query_set.filter(title__icontains=title)
