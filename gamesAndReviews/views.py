@@ -1,5 +1,7 @@
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Avg
+from django.db.models.functions import Round
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -75,11 +77,8 @@ class GameListView(ListView):
         return context
 
     def get_queryset(self):
-        query_set = (
-            super()
-            .get_queryset()
-            .prefetch_related("authors")
-            .select_related("genre")
+        query_set = Game.objects.select_related('genre').annotate(
+            average_rating=Round(Avg('reviews__rating'), 1)
         )
         genre_name = self.request.GET.get("genre", None)
         name = self.request.GET.get("name", None)
@@ -100,12 +99,18 @@ class GameDetailView(DetailView):
     model = Game
     queryset = Game.objects.prefetch_related("reviews__author", "authors")
 
+
 class AuthorListView(ListView):
     model = Author
     paginate_by = 6
 
     def get_queryset(self):
-        query_set = super().get_queryset()
+        query_set = (
+            super()
+            .get_queryset()
+            .prefetch_related("games", 'review_set')
+            .annotate(average_rating=Avg('review__rating'))
+        )
         username = self.request.GET.get("username", None)
         if username:
             query_set = query_set.filter(username__icontains=username)
