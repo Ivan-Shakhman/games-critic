@@ -15,7 +15,9 @@ class RegistrationForm(UserCreationForm):
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if Author.objects.filter(username=username).exists():
-            raise forms.ValidationError("Username already exists. Please choose another.")
+            raise forms.ValidationError(
+                "Username already exists. Please choose another."
+            )
         return username
 
 
@@ -49,6 +51,7 @@ class GameCreationForm(ModelForm):
             "authors": forms.CheckboxSelectMultiple(),
         }
 
+
 class ReviewCreationForm(ModelForm):
     class Meta:
         model = Review
@@ -60,7 +63,7 @@ class ReviewCreationForm(ModelForm):
 
 
 class GameSearchForm(forms.Form):
-    name =forms.CharField(
+    name = forms.CharField(
         max_length=50,
         label="",
         widget=forms.TextInput(attrs={"placeholder": "Search by Name"})

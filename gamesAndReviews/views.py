@@ -4,14 +4,26 @@ from django.contrib.auth import login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import generic
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 
-from gamesAndReviews.forms import RegistrationForm, UpdateAuthorForm, GameCreationForm, ReviewCreationForm, \
-    GameSearchForm, AuthorSearchForm, ReviewSearchForm, AddToFavoritesForm
+from gamesAndReviews.forms import (
+    RegistrationForm,
+    UpdateAuthorForm,
+    GameCreationForm,
+    ReviewCreationForm,
+    GameSearchForm,
+    AuthorSearchForm,
+    ReviewSearchForm,
+    AddToFavoritesForm
+)
 from gamesAndReviews.models import Author, Game, Review, Genre
 
 
@@ -29,6 +41,7 @@ def register(request):
         "registration/registration.html",
         {"form": form}
     )
+
 
 def index(request):
     """View function for the home page of the site."""
@@ -66,7 +79,7 @@ class GameListView(ListView):
         return context
 
     def get_queryset(self):
-        query_set =super().get_queryset()
+        query_set = super().get_queryset()
         genre_name = self.request.GET.get("genre", None)
         name = self.request.GET.get("name", None)
         if genre_name:
@@ -80,7 +93,6 @@ class GameListView(ListView):
         if form.is_valid():
             form.save()
         return redirect("games_and_reviews:games-list")
-
 
 
 class GameDetailView(DetailView):
@@ -106,6 +118,7 @@ class AuthorListView(ListView):
         )
         return context
 
+
 class AuthorDetailView(LoginRequiredMixin, DetailView):
     model = Author
     queryset = Author.objects.all().prefetch_related("games__authors")
@@ -120,7 +133,6 @@ class AuthorUpdateView(LoginRequiredMixin, UpdateView):
 class AuthorDeleteView(LoginRequiredMixin, DeleteView):
     model = Author
     success_url = reverse_lazy("games_and_reviews:index")
-
 
 
 class ReviewListView(ListView):
@@ -147,7 +159,6 @@ class ReviewListView(ListView):
         return query_set.order_by("-date_of_post")
 
 
-
 class GameCreateView(LoginRequiredMixin, CreateView):
     model = Game
     form_class = GameCreationForm
@@ -169,7 +180,7 @@ class ReviewDetailView(DetailView):
     model = Review
 
 
-class CreateReviewView(LoginRequiredMixin ,CreateView):
+class CreateReviewView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewCreationForm
     template_name = 'gamesAndReviews/review_form.html'
@@ -184,7 +195,6 @@ class CreateReviewView(LoginRequiredMixin ,CreateView):
         form.instance.author = self.request.user
         form.instance.game_to_review = game
         return super().form_valid(form)
-
 
     def get_success_url(self):
         return reverse_lazy("games_and_reviews:reviews-list")

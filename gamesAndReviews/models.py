@@ -37,6 +37,7 @@ class Author(AbstractUser):
         if avg_rating:
             return round(avg_rating, 1)
         return 0
+
     def __str__(self):
         return f"{self.username}"
 
@@ -79,11 +80,11 @@ class Review(models.Model):
     )
 
     def short_content(self):
-        return self.content[:60] + "..." if len(self.content) > 60 else self.content
+        return (
+            self.content[:60]
+            + "..." if len(self.content) > 60
+            else self.content
+        )
 
     def __str__(self):
         return f"({self.author.pseudonym}) {self.title}"
-
-
-
-
