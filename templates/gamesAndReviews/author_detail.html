@@ -70,6 +70,24 @@
                 <p>No reviews written yet.</p>
               {% endif %}
             </div>
+
+          <div class="mt-4">
+              {% if author.favorite_games %}
+                <h5>Favorite games:</h5>
+                <ul class="list-group list-group-flush">
+                  {% for fav_game in author.favorite_games.all %}
+                    <li class="list-group-item">
+                      <a style="text-decoration: none; color: dimgray"
+                         href="{% url "games_and_reviews:games-detail" pk=fav_game.id %}">
+                        {{ fav_game.name }}</a>
+
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>No favorite games yet.</p>
+              {% endif %}
+            </div>
           </div>
         </div>
       </div>
