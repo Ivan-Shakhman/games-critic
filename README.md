@@ -2,6 +2,8 @@
 Django project for reviewing games
 ## Check it out!
 https://games-critic.onrender.com
+### You can use this account for test all functionality:
+Username: ford_mustang23 Password: 1qazcde3
 ## Installation
 Python3 must be already installed
 ```shell
