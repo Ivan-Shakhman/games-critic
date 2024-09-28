@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     "crispy_forms",
     "cloudinary",
     "cloudinary_storage",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
