@@ -79,14 +79,14 @@ class GameListView(ListView):
     def get_queryset(self):
         query_set = Game.objects.select_related('genre').annotate(
             average_rating=Round(Avg('reviews__rating'), 1)
-        )
+        ).order_by("-release_date")
         genre_name = self.request.GET.get("genre", None)
         name = self.request.GET.get("name", None)
         if genre_name:
             query_set = query_set.filter(genre__name__icontains=genre_name)
         if name:
             query_set = query_set.filter(name__icontains=name)
-        return query_set.order_by("-release_date")
+        return query_set
 
     def post(self, request, *args, **kwargs):
         form = AddToFavoritesForm(request.POST, user=request.user)
@@ -127,7 +127,7 @@ class AuthorListView(ListView):
 
 class AuthorDetailView(LoginRequiredMixin, DetailView):
     model = Author
-    queryset = Author.objects.all().prefetch_related(
+    queryset = Author.objects.prefetch_related(
         "games__authors",
         "games__genre"
     )

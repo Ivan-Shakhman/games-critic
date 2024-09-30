@@ -101,9 +101,9 @@ WSGI_APPLICATION = "GamesCritic.wsgi.application"
 
 
 cloudinary.config(
-    cloud_name="de1mietzb",
-    api_key="689212333997839",
-    api_secret="qqjzzorQljAPDRW8w3oZWBJ0JWw",
+    cloud_name=os.getenv('CLOUD_NAME'),
+    api_key=os.getenv('api_key'),
+    api_secret=os.getenv('API_SECRET'),
     secure=True,
 )
 
