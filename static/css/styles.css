@@ -108,18 +108,9 @@ legend {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1em;
 }
 
 .header, .footer {
     background-color: #f1f1f1;
-    padding: 1em 0;
     text-align: center;
 }
-
-.main-content {
-    padding: 1em;
-}
-
-
-
