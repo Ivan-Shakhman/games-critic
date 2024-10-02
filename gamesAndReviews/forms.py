@@ -10,10 +10,10 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = Author
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ["username", "email", "password1", "password2"]
 
     def clean_username(self):
-        username = self.cleaned_data.get('username')
+        username = self.cleaned_data.get("username")
         if Author.objects.filter(username=username).exists():
             raise forms.ValidationError(
                 "Username already exists. Please choose another."
@@ -90,11 +90,11 @@ class AddToFavoritesForm(forms.Form):
     game_id = forms.IntegerField(widget=forms.HiddenInput)
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
+        self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
 
     def save(self):
-        game = Game.objects.get(id=self.cleaned_data['game_id'])
+        game = Game.objects.get(id=self.cleaned_data["game_id"])
         if self.user and game:
             if game in self.user.favorite_games.all():
                 self.user.favorite_games.remove(game)

@@ -33,7 +33,7 @@ class Author(AbstractUser):
         return reverse("taxi:driver-detail", kwargs={"pk": self.pk})
 
     def average_rating(self):
-        avg_rating = self.review_set.aggregate(Avg('rating'))['rating__avg']
+        avg_rating = self.review_set.aggregate(Avg("rating"))["rating__avg"]
         if avg_rating:
             return round(avg_rating, 1)
         return 0
@@ -44,7 +44,7 @@ class Author(AbstractUser):
 
 class Game(models.Model):
     name = models.CharField(max_length=255)
-    image = CloudinaryField('image')
+    image = CloudinaryField("image")
     description = models.TextField()
     price = models.DecimalField(max_digits=4, decimal_places=2)
     genre = models.ForeignKey(

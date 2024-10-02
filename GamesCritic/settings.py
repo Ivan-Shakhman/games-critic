@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
-from http.cookiejar import debug
 from pathlib import Path
 
 import cloudinary
@@ -34,18 +33,14 @@ load_dotenv(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG") != "False"
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "games-critic.onrender.com"
-]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 INTERNAL_IPS = [
-    '127.0.0.1',
+    "127.0.0.1",
 ]
 
 # Application definition
@@ -73,7 +68,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "GamesCritic.urls"
@@ -101,9 +95,9 @@ WSGI_APPLICATION = "GamesCritic.wsgi.application"
 
 
 cloudinary.config(
-    cloud_name=os.getenv('CLOUD_NAME'),
-    api_key=os.getenv('api_key'),
-    api_secret=os.getenv('API_SECRET'),
+    cloud_name=os.getenv("CLOUD_NAME"),
+    api_key=os.getenv("api_key"),
+    api_secret=os.getenv("API_SECRET"),
     secure=True,
 )
 
@@ -114,15 +108,15 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': os.getenv('PGDATABASE'),
-    'USER': os.getenv('PGUSER'),
-    'PASSWORD': os.getenv('PGPASSWORD'),
-    'HOST': os.getenv('PGHOST'),
-    'PORT': os.getenv('PGPORT', 5432),
-    'OPTIONS': {
-      'sslmode': 'require',
+  "default": {
+    "ENGINE": "django.db.backends.postgresql",
+    "NAME": os.getenv("PGDATABASE"),
+    "USER": os.getenv("PGUSER"),
+    "PASSWORD": os.getenv("PGPASSWORD"),
+    "HOST": os.getenv("PGHOST"),
+    "PORT": os.getenv("PGPORT", 5432),
+    "OPTIONS": {
+      "sslmode": "require",
     },
   }
 }

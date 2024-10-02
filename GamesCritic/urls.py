@@ -21,8 +21,7 @@ from django.urls import path, include
 from gamesAndReviews import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('__debug__/', include('debug_toolbar.urls')),
+    path("admin/", admin.site.urls),
     path("register/", views.register, name="register"),
     path("accounts/", include("django.contrib.auth.urls")),
     path(

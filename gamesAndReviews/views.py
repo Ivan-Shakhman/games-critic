@@ -63,7 +63,7 @@ def index(request):
     return render(request, "gamesAndReviews/index.html", context=context)
 
 
-class GameListView(ListView):
+class GameListView(LoginRequiredMixin, ListView):
     model = Game
     paginate_by = 6
 
@@ -77,16 +77,16 @@ class GameListView(ListView):
         return context
 
     def get_queryset(self):
-        query_set = Game.objects.select_related('genre').annotate(
-            average_rating=Round(Avg('reviews__rating'), 1)
-        ).order_by("-release_date")
+        query_set = Game.objects.select_related("genre").annotate(
+            average_rating=Round(Avg("reviews__rating"), 1)
+        )
         genre_name = self.request.GET.get("genre", None)
         name = self.request.GET.get("name", None)
         if genre_name:
             query_set = query_set.filter(genre__name__icontains=genre_name)
         if name:
             query_set = query_set.filter(name__icontains=name)
-        return query_set
+        return query_set.order_by("-release_date")
 
     def post(self, request, *args, **kwargs):
         form = AddToFavoritesForm(request.POST, user=request.user)
@@ -108,8 +108,8 @@ class AuthorListView(ListView):
         query_set = (
             super()
             .get_queryset()
-            .prefetch_related("games", 'review_set')
-            .annotate(average_rating=Avg('review__rating'))
+            .prefetch_related("games", "review_set")
+            .annotate(average_rating=Avg("review__rating"))
         )
         username = self.request.GET.get("username", None)
         if username:
@@ -150,11 +150,11 @@ class ReviewListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        reviews = context['object_list']
+        reviews = context["object_list"]
         title = self.request.GET.get("title", "")
         for review in reviews:
             review.short_content = review.short_content()
-        context['short_content'] = reviews
+        context["short_content"] = reviews
         context["review_search_form"] = ReviewSearchForm(
             initial={"review_title": title}
         )
@@ -192,15 +192,15 @@ class ReviewDetailView(DetailView):
 class CreateReviewView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewCreationForm
-    template_name = 'gamesAndReviews/review_form.html'
+    template_name = "gamesAndReviews/review_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['game'] = get_object_or_404(Game, id=self.kwargs['pk'])
+        context["game"] = get_object_or_404(Game, id=self.kwargs["pk"])
         return context
 
     def form_valid(self, form):
-        game = get_object_or_404(Game, id=self.kwargs['pk'])
+        game = get_object_or_404(Game, id=self.kwargs["pk"])
         form.instance.author = self.request.user
         form.instance.game_to_review = game
         return super().form_valid(form)

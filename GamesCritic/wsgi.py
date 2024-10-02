@@ -12,6 +12,6 @@ import os
 import cloudinary
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GamesCritic.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "GamesCritic.settings")
 
 application = get_wsgi_application()
