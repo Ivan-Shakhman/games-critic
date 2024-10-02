@@ -20,7 +20,7 @@
               <a href="{% url 'games_and_reviews:games-detail' pk=game.id %}" 
                  style="text-decoration: none; color: dimgrey">Details >></a>
               <h5>Rating: {{ game.average_rating }}</h5>
-              
+            <!-- svg button for add game to your liked list -->
               <form action="{% url 'games_and_reviews:games-list' %}" method="post" class="mt-2" style="display: flex; flex-direction: column; height: 100%; justify-content: flex-end;">
                 {% csrf_token %}
                 <input type="hidden" name="game_id" value="{{ game.id }}">
