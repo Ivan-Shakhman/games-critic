@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if user == review.author %}
+    <a href="{% url "games_and_reviews:review-update" pk=review.id %}" 
+       class="btn btn-secondary link-to-page">
+        Change
+      </a>
+    <a href="{% url "games_and_reviews:review-delete" pk=review.id %}" 
+       class="btn btn-danger link-to-page">
+        Delete
+      </a>
+  {% endif %}
+  <h3>Review on {{ review.game_to_review.name }} by {{ review.author.username }}</h3>
+  <h5>Wrote at: {{ review.date_of_post }}</h5>
+  <p style="font-size: 18px">
+  {{ review.content }}
+  </p>
+  <br>
+  <h5>Final rate: {{ review.rating }}</h5>
+  
+
+{% endblock %}

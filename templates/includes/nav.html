@@ -1,0 +1,77 @@
+{% load static %}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+{% if user.is_authenticated %}
+  <a class="navbar-brand" href="{% url "games_and_reviews:author-detail" pk=user.id %}">{{ user.get_username }}</a>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+    {% endif %}
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url "games_and_reviews:index" %}">Home page<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url "games_and_reviews:games-list" %}">Games<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url "games_and_reviews:reviews-list" %}">Reviews<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url "games_and_reviews:authors-list" %}">Authors <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+
+
+          {% if user.is_authenticated %}
+            <form method="post" action="{% url "logout" %}">
+            {% csrf_token %}
+              <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Logout</button>
+            </form>
+          {% else %}
+            <form method="post" action="{% url "login" %}">
+            {% csrf_token %}
+              <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Login</button>
+            </form>
+            <a style="color: white"> << or >> </a>
+              <button type="submit" class="btn btn-outline-success my-2 my-sm-0">
+                <a href="{% url "register" %}" style="text-decoration: none; color: lightgreen">register</a>
+              </button>
+
+             {% endif %}
+
+
+    </div>
+  </nav>
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/header_base_5.jpg' %}" alt="">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Welcome to Games Critic</h1>
+            <p>On this site you can freely post your games or review other people's games.
+             Be friendly and don't insult anyone. And successful reviews)
+            </p>
+            <p>
+            {% if user.is_authenticated %}
+
+              <a class="btn btn-lg btn-secondary" href="{% url "games_and_reviews:games-list" %}" role="button">
+                Start review
+              </a>
+              <a class="btn btn-lg btn-secondary" href="{% url "games_and_reviews:game-create" %}" role="button">
+                 Add game to review
+              </a>
+              
+              {% else %}
+              <a class="btn btn-lg btn-secondary" href="{% url "login" %}" role="button">
+                Start review
+              </a>
+               <a class="btn btn-lg btn-secondary" href="{% url "login" %}" role="button">
+                 Add game to review
+              </a>
+            {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
